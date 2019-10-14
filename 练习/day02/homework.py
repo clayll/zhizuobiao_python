@@ -12,8 +12,25 @@ def test11():
     else:
         print("%s年是闰年" % inputYear);
 
+# 写一个程序计算三角形的面积，使用面积公式S=ah/2，a代表底，h代表高；
+#
+# 要求
+#
+#     1：a和h从键盘录入
+#
+#     2：只使用一个input
 def test12():
-    pass
+    inputStr = input("请输入三角形的底和高，用英文逗号隔开:")
+    inputStr = inputStr.strip(' ')
+
+    ls = inputStr.split(",")
+    if(len(ls) != 2):
+        print('输入有误，请重新输入！')
+        return
+    a = float(ls[0])
+    h = float(ls[1])
+    rs = (a*h)/2
+    print("三角形的面积是：%.2f" % rs)
 
 '''
 键盘输入一个字符，使用两种方法，判断该字符为大写还是小写，并将其大小写翻转输出。
@@ -22,6 +39,7 @@ def test13():
     inputStr = input("请输入一个字符:")
     if len(inputStr) > 1:
         print("您输入的字符超过了一个，请重新输入。")
+        return
     if inputStr.islower():
         print("输入的小写字母，反转为：%s" % inputStr.upper())
     elif inputStr.isupper():
@@ -47,6 +65,21 @@ def test21():
 
     list4.sort()
     print(list4)
+    print('This float, %-10.5f,has width 10 and precision 5.' % (3.1415926))
+    print(ord('a'))
+    print(2**3*4%5)
 
+# 输入一串字符串，并求出该字符串最后一个单词的长度。
+#
+# 例如：输入hello world，输出5。
+def test24():
+    inputStr = input("请输入一串字符串:")
+    inputStr = inputStr.strip(' ')
+    if len(inputStr) < 1:
+        print("您输入的有误，请重新输入。")
+        return
 
-test21()
+    ls = inputStr.split(" ")
+    print(ls[-1])
+
+test12()
