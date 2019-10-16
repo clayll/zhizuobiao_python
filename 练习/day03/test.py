@@ -71,7 +71,14 @@ def test5():
     print("获取汪峰妻子的名字:%s" % dic.setdefault('wife')[0]['name'])
     # 4.获取汪峰的第三个孩子的名字
     print("汪峰的第三个孩子的名字:%s" % [dic.setdefault('children')[i] for i in  dic.setdefault('children').keys()][2])
+def test():
+    list1 = [2, 3, 8, 4, 9, 5, 6]
+    list2 = [5, 6, 10, 17, 11, 2]
 
-test5()
+    ls = map(lambda x,y : x+y,[i+1 for i in range(10)],[i+2 for i in range(10)])
+    print(list(ls))
+test()
 
 # test4()
+
+# map(float,input())

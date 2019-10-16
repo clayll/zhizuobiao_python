@@ -56,7 +56,7 @@ def test21():
     import copy
     list1 = [2, 3, 8, 4, 9, 5, 6]
     list2 = [5, 6, 10, 17, 11, 2]
-    list3 = copy.deepcopy(list1)
+    list3 = copy.copy(list1)
     list3.extend(list2)
     list4 = []
     for item in list3:
