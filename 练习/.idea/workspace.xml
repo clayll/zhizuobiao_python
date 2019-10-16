@@ -72,6 +72,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+<<<<<<< HEAD
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="1085" />
+    <option name="y" value="755" />
+    <option name="width" value="1396" />
+    <option name="height" value="814" />
+=======
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -85,6 +92,7 @@
     <option name="y" value="200" />
     <option name="width" value="1399" />
     <option name="height" value="815" />
+>>>>>>> 56e62919ba4f21acb4ec817744a8d5d222cf43a0
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -198,19 +206,43 @@
       <option name="presentableId" value="Default" />
       <updated>1570626248773</updated>
       <workItem from="1570626263957" duration="1872000" />
+<<<<<<< HEAD
+      <workItem from="1571056206211" duration="259000" />
+=======
       <workItem from="1570864275833" duration="7716000" />
       <workItem from="1571013811148" duration="4755000" />
+<<<<<<< HEAD
       <workItem from="1571201396013" duration="467000" />
+=======
+>>>>>>> 56e62919ba4f21acb4ec817744a8d5d222cf43a0
+>>>>>>> 3f7725b6baa6d90c6a2c8c89cef64b9f4f8d68f0
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="14810000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="2131000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="277" y="755" width="1396" height="814" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25337332" />
+=======
+    <option name="totallyTimeSpent" value="14343000" />
+>>>>>>> 3f7725b6baa6d90c6a2c8c89cef64b9f4f8d68f0
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23288591" />
+=======
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2295302" />
+>>>>>>> 56e62919ba4f21acb4ec817744a8d5d222cf43a0
+>>>>>>> 3f7725b6baa6d90c6a2c8c89cef64b9f4f8d68f0
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
