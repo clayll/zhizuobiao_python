@@ -1,3 +1,4 @@
+import numpy as np
 # 1. 现有如下代码：
 class Student:
 	def __init__(self,name,age,score):
@@ -29,7 +30,7 @@ def showTime():
         time.sleep(1)
 
 t = threading.Thread(target=showTime)
-t.start()
+# t.start()
 
 
 
@@ -47,5 +48,15 @@ for i in range(1,5):
     plt.yticks(())
     plt.text(0.5,0.5,i,color='r',size=36,ha='center',va='center')
 
-plt.show()
+# plt.show()
 
+x = np.random.uniform(0.5,1,5)
+y = np.random.uniform(0.5,1,5)
+print(x)
+print(y)
+for  x_,y_ in zip(x,y):
+    print(x_,y_)
+
+import pprint
+# pprint.pprint(locals())
+pprint.pprint(globals())
