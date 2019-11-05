@@ -71,11 +71,11 @@ class Employees:
 #
 # es = Employees()
 # es.add_employee()
-
+import numpy as np
+import matplotlib.pyplot as plt
 
 def test3():
-    import numpy as np
-    import matplotlib.pyplot as plt
+
 
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.figure("电影票房榜",figsize=(16,7))
@@ -91,4 +91,22 @@ def test3():
     # plt.barh([3,5],[12,20])
     plt.barh(x_,y_,color='yellow')
     plt.show()
+
+
+
+delta = 0.25
+x = np.arange(-3.0, 3.0, delta)
+y = np.arange(-2.0, 2.0, delta)
+X, Y = np.meshgrid(x, y)
+Z1 = np.exp(-X**2 - Y**2)
+Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
+Z = (Z1 - Z2) * 2
+
+print(x.shape)
+# print(y)
+# print(Z)
+
+
+plt.plot(X, Y,'.')
+plt.show()
 
