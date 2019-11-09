@@ -126,7 +126,3 @@ class newsSpider():
 n= newsSpider("国内新闻")
 # n.run()
 
-print("醒脑液体退钱：",205.5*14)
-print("排痰退钱",15*72)
-
-print("合计",205.5*14+15*72)
