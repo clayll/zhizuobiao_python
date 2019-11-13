@@ -1,5 +1,5 @@
 练习/.idea/
-课件/
+课件/*.~*
 练习/venv/
 
 # Byte-compiled / optimized / DLL files
