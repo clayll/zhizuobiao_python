@@ -6,4 +6,4 @@ def foo():
         print("res:",res)
 g = foo()
 print(next(g))
-print("*"*20)
+
