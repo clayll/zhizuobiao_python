@@ -148,3 +148,39 @@ class maoyanSpider():
         # print(time.time()-t1)
 n= maoyanSpider("猫眼电影")
 # n.run()
+
+
+
+def fib(max):
+    n,a,b =0,0,1
+    while n < max:
+        yield b
+        a,b =b,a+b
+        n = n+1
+    return 'done'
+for i in fib(6):
+    print(i)
+
+import time
+
+
+def consumer(name):
+    print("%s 准备学习啦!" % name)
+    while True:
+        lesson = yield
+
+        print("开始[%s]了,[%s]老师来讲课了!" % (lesson, name))
+
+
+def producer(name):
+    c = consumer('A')
+    c2 = consumer('B')
+    c.__next__()
+    c2.__next__()
+    print("同学们开始上课 了!")
+    for i in range(10):
+        time.sleep(1)
+        print("到了两个同学!")
+        c.send(i)
+        c2.send(i)
+
