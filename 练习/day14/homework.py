@@ -39,7 +39,6 @@ class Card():
         else:
             return self.cardColor + self.cardName
 
-
 # 扑克牌类
 class Poker():
     def __init__(self):
