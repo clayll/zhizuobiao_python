@@ -4,71 +4,50 @@ from pyquery import PyQuery as pq
 import csv
 import re
 
-class maoyanSpider():
+class DoubanSpider():
 
     def __init__(self,kw):
         self.filename = kw
         self.headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 SE 2.X MetaSr 1.0"}
-        # self.url_list = []
-
 
     def init_allUrl(self):
         self.start_url = "https://movie.douban.com/top250"
-        self.baseurl ='https://maoyan.com/board/4'
-        self.baseurlA = 'https://maoyan.com'
+        self.baseurl ='https://movie.douban.com/top250'
 
-        # self.url_list.append(self.start_url)
 
     def  parse_url(self,url):
-
         response = requests.get(url, headers=self.headers)
         response.encoding = "utf-8"
         return response.text
 
     def get_url_content(self, content):
-
         """遍历所有的页面"""
         div_list = pq(content)("ol li")
-
-
         content_list = []
         # 遍历内容
         for mydiv in div_list.items():
             item = {}
-
-
-            info = mydiv(".info")
-            item["movie_name"] = info("div .hd a span .title:first").text()
-            #
-            # a = mydiv.find(name='a')
-            # href = self.baseurlA+a.get("href")
-            # title = a.get("title")
-            # imgSrc = a.find(name='img',class_="board-img")
-            # if imgSrc:
-            #     imgSrc = imgSrc.get("data-src")
-            # datetime = mydiv.find(name="p",class_="releasetime")
-            # if datetime:
-            #     datetime = self.__replceTime(datetime.text)
-            # actors = mydiv.find(name="p",class_="star")
-            # if actors:
-            #     actors = self.__replceBlank(actors.text)
-            # item = dict({"链接": href, "标题": title,"发布日期":datetime,"图片链接":imgSrc,"主演":actors})
-
+            movie_a = mydiv(".info")("div .hd a:first")
+            movie_bd = mydiv("div .bd")
+            item["movie_num"] = mydiv("div .pic em").text()
+            item["movie_name"] = self.__replceBlank(movie_a("span").text())
+            self.__replceActorDir(movie_bd("p:first").text(),item)
+            item["movie_score"] = movie_bd(".rating_num").text()
+            item["movie_intro"] = movie_bd(".quote").text()
+            item["movie_url"] = movie_a.attr("href")
             # time.sleep(random.random() * 5)
-            print(item)
+
             content_list.append(item)
 
-
         # 抽取下一页
-        next_page = pq(content)(name= 'a',text="下一页")
+        next_page = pq(content)("div .paginator")("a:contains('后页')")
+
         next_url = ""
         if next_page:
-            next_url =self.baseurl + next_page.get("href")
+            next_url =self.baseurl + next_page.attr("href")
         return content_list,next_url
 
-
     def save_content_list(self,content_list):
-
         f = open(self.filename + ".csv", mode="a", encoding="utf-8")
         writer = csv.writer(f)
         flag = True
@@ -82,10 +61,38 @@ class maoyanSpider():
             #读取json数据的每一行，将values数据一次一行的写入csv中
             writer.writerow(list(item.values()))
 
-    # 特殊空格换行符/
+    # 特殊&nbsp; 以及字符/
     def __replceBlank(self,content):
-        p = re.compile(r"//n|\s")
-        return re.sub(p,"",content)
+        content = content.replace("\n", "")
+        return "".join(content.split("\xa0"))
+
+    def __replceActorDir(self,content,item):
+        '''
+        提取导演、演员、年份、国家、类型,传入item，并返回
+        :param content:
+        :return:item
+        '''
+        content = self.__replceBlank(content)
+        try:
+            # p = re.compile("导演:(.*)主.(.*?)(\d+.*)")
+            p = re.compile("导演:(.*?)[主|\.\.\.|主演:].(.*?)(\d+.*)")
+            r1 = re.search(p, content)
+            item["movie_director"] = r1.group(1).strip()
+            item["movie_star"] = r1.group(2)
+
+            # 在进行正则替换
+            p2 = re.compile(r"[\:|\/|\.]+")
+            item["movie_star"] = re.sub(p2,"",item["movie_star"]).strip()
+
+            r2 = r1.group(3).split("/")
+            item["movie_year"] = r2[0].strip()
+            item["movie_country"] = r2[1].strip()
+            item["movie_type"] = r2[2].strip()
+        except Exception as ex:
+            print("错误号：",item["movie_num"])
+            print("内容：", content)
+            print(ex)
+        return item
 
     # 特殊处理上映时间
     def __replceTime(self, content):
@@ -109,12 +116,29 @@ class maoyanSpider():
             if len(content)>0:
                 content_list.extend(content)
 
-
         # 3.做数据保存
         self.save_content_list(content_list)
 
-
-
-        # print(time.time()-t1)
-n= maoyanSpider("猫眼电影")
+n= DoubanSpider("douban250")
 n.run()
+
+
+def test():
+    s = "导演: 奥利维·那卡什 Olivier Nakache / 艾力克·托兰达 Eric Toledano主...2011/法国/剧情 喜剧"
+    s1= "导演: 弗洛里安·亨克尔·冯·多纳斯马尔克 Florian Henckel von Donnersmarck&n...2006/德国/剧情 悬疑"
+    p = re.compile("导演:(.*?)[主|\.\.\.|主演:].(.*?)(\d+.*)")
+
+    r1 = re.search(p, s1)
+    print(r1.groups())
+
+    s3="丹尼尔·雷德克里夫DanielRadcliffe / ..."
+    s4 ="..."
+    p2 = re.compile(r"[\/|\.]+")
+    rs3= re.sub(p2, "",s4).strip()
+
+    print(rs3)
+
+# test()
+
+
+
