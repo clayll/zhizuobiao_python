@@ -1,0 +1,13 @@
+name,brand,clothes,num,cost
+father,hailan,t-shirt,1,100
+father,lining,sweater,1,150
+father,hailan,pants,2,100
+mother,bird,coat,2,200
+mother,bird,sweater,3,150
+mother,yichun,coat,1,300
+boy,lining,pants,3,630
+boy,lining,t-shirt,4,200
+girl,uniqlo,sweater,3,160
+girl,bird,suit,3,706
+girl,yichun,pants,1,200
+girl,bird,jacket,2,800
