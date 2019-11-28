@@ -10,7 +10,6 @@ mp.rcParams['axes.unicode_minus']=False
 
 pd.set_option('display.max_columns', 12)
 # df = pd.read_csv('titanic_train.csv')
-#
 # print(df.head(2))
 #
 # print(df.loc[df.Embarked.isna() == True,'Embarked'].index.values)
@@ -19,24 +18,40 @@ pd.set_option('display.max_columns', 12)
 #
 # print(df1['Embarked'].unique())
 df = pd.read_csv('douban250.csv')
-print(df.head(2))
+df.loc[(df['movie_country'] == '1964(中国大陆)') | (df['movie_country'] == '2019(中国大陆重映)'),'movie_country'] = '中国大陆'
+print(df.head(1))
 def checkName():
     movieCount = len(df['movie_name'].unique())
     print("数据总共有250条，检查重名的数量%s，所以没有重名" % movieCount)
 #a.	重复值检查（检查是否有重名电影）
-checkName()
+# checkName()
 
-def countryRank():
-    print(len(df[df['movie_country'].isnull()==True]))
-    print(len(df['movie_country'].unique()))
-    df1 = df.groupby(by='movie_country').size()
-    print(df1)
-countryRank()
+
+
 # b.	查看国家或地区与电影制作的排名情况（空值部分请替换为‘0’，可以考虑先按列计数，替换空值，再按行汇总。）
+def countryRank():
+    contry = df['movie_country'].str.split(' ').apply(pd.Series)
+    contry = contry.apply(pd.Series.value_counts)
+    contry.fillna(value=0, inplace=True)
+    contry.rename({0: 'a1', 1: 'a2', 2: 'a3', 3: 'a4', 4: 'a5', 5: 'a6'}, inplace=True, axis=1)
+
+# countryRank()
+
 # c.	统计每个区域里相同国家的总数。
-# d.	计算每个国家参与职做的电影总数排名情况
+def countryTotal():
+    contry = df['movie_country'].str.split(' ').apply(pd.Series)
+    contry = contry.apply(pd.Series.value_counts)
+    contry.fillna(value=0, inplace=True)
+    contry.rename({0: 'a1', 1: 'a2', 2: 'a3', 3: 'a4', 4: 'a5', 5: 'a6'}, inplace=True, axis=1)
+    print(contry.sum(axis=1).sort_values(ascending=False))
+
+cs = pd.cut(df['movie_num'],bins=12,labels=list("abcdefghijkl"))
+print(cs)
+
+countryTotal()
+# d.	计算每个国家参与制作的电影总数排名情况
 # e.	获取电影类型数量前10的类型及上榜次数最多的导演
-# f.	评分和排名的关系a.	重复值检查（检查是否有重名电影）
+# f.	评分和排名的关系
 def myToInt(item):
     print(item,type(item))
     if isinstance(item,str):
@@ -46,15 +61,7 @@ def myToInt(item):
 
 
 
-contry = df['movie_country'].str.split(' ').apply(pd.Series)
-contry = contry.apply(pd.Series.value_counts)
 
-contry.fillna(value=0,inplace=True)
-
-contry.rename({0:'a1',1:'a2',2:'a3',3:'a4',4:'a5',5:'a6'},inplace=True,axis=1)
-
-
-print(contry)
 # x1 = contry.groupby('a1').sum()
 # print(x1)
 
