@@ -19,7 +19,12 @@ pd.set_option('display.max_columns', 12)
 # print(df1['Embarked'].unique())
 df = pd.read_csv('douban250.csv')
 df.loc[(df['movie_country'] == '1964(中国大陆)') | (df['movie_country'] == '2019(中国大陆重映)'),'movie_country'] = '中国大陆'
+
+df.loc[df.movie_type == '1978(中国大陆)','movie_type'] = '动画 奇幻'
+df.loc[df.movie_type == '中国大陆','movie_type'] = '动画 奇幻'
 print(df.head(1))
+
+print(df.query("movie_type == '1978(中国大陆)' | movie_type ==  '中国大陆' "))
 def checkName():
     movieCount = len(df['movie_name'].unique())
     print("数据总共有250条，检查重名的数量%s，所以没有重名" % movieCount)
@@ -51,13 +56,21 @@ print(cs)
 countryTotal()
 # d.	计算每个国家参与制作的电影总数排名情况
 # e.	获取电影类型数量前10的类型及上榜次数最多的导演
+def typeRank():
+    types = df['movie_type'].str.split(' ').apply(pd.Series)
+    types = types.apply(pd.Series.value_counts)
+    types.fillna(value=0,inplace=True)
+
+    print(pd.Series(types.sum(axis=1).sort_values(ascending=False),dtype=int) )
+
+
+typeRank()
+
 # f.	评分和排名的关系
-def myToInt(item):
-    print(item,type(item))
-    if isinstance(item,str):
-        return 1
-    else:
-        return item
+print(np.corrcoef(df.movie_num ,df.movie_score))
+mp.scatter(df.movie_num ,df.movie_score)
+mp.show()
+
 
 
 
