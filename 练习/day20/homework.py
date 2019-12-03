@@ -3,12 +3,13 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as mp
+import seaborn as sns
 mp.rcParams['font.sans-serif'] = ['SimHei']
 mp.rcParams['font.serif'] = ['SimHei']
 mp.rcParams['axes.unicode_minus']=False
 
 
-pd.set_option('display.max_columns', 12)
+# pd.set_option('display.max_columns', 12)
 # df = pd.read_csv('titanic_train.csv')
 # print(df.head(2))
 #
@@ -67,19 +68,36 @@ def typeRank():
 typeRank()
 
 # f.	评分和排名的关系
-print(np.corrcoef(df.movie_num ,df.movie_score))
-mp.scatter(df.movie_num ,df.movie_score)
-mp.show()
+# print(np.corrcoef(df.movie_num ,df.movie_score))
+# mp.scatter(df.movie_num ,df.movie_score)
+# mp.show()
 
 
-
-
+print(df.describe(include=['O']))
+print(df.corr())
 
 # x1 = contry.groupby('a1').sum()
 # print(x1)
-
-
-
+import math
+def plot_distribution(dataset, cols=3, width=20, height=15, hspace=0.2, wspace=0.5):
+    mp.style.use('seaborn-whitegrid')
+    fig = mp.figure(figsize=(width,height))
+    fig.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=wspace, hspace=hspace)
+    rows = math.ceil(float(dataset.shape[1]) / cols)
+    for i, column in enumerate(dataset.columns):
+        ax = fig.add_subplot(rows, cols, i + 1)
+        ax.set_title(column)
+        if dataset.dtypes[column] == np.object:
+            g = sns.countplot(y=column, data=dataset)
+            substrings = [s.get_text()[:18] for s in g.get_yticklabels()]
+            g.set(yticklabels=substrings)
+            mp.xticks(rotation=25)
+        else:
+            #直方图，频数
+            g = sns.distplot(dataset[column])
+            mp.xticks(rotation=25)
+    mp.show()
+plot_distribution(df)
 
 # s1 = df['movie_country'].str.split(' ')
 #
