@@ -4,9 +4,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as mp
 import seaborn as sns
+import math
+#指定默认字体
 mp.rcParams['font.sans-serif'] = ['SimHei']
-mp.rcParams['font.serif'] = ['SimHei']
-mp.rcParams['axes.unicode_minus']=False
+mp.rcParams['font.family']='sans-serif'
+#解决负号'-'显示为方块的问题
+mp.rcParams['axes.unicode_minus'] = False
+sns.set(font='SimHei')  # 解决Seaborn中文显示问题  https://www.lizenghai.com/archives/34192.html
 
 
 # pd.set_option('display.max_columns', 12)
@@ -96,9 +100,38 @@ def plot_distribution(dataset, cols=3, width=20, height=15, hspace=0.2, wspace=0
             #直方图，频数
             g = sns.distplot(dataset[column])
             mp.xticks(rotation=25)
-    mp.show()
-plot_distribution(df)
+    # mp.show()
+# plot_distribution(df)
 
+def plot_distribution2(dataset : pd.DataFrame,cols=5,width=20,height=15,wspace=0.2,hspace=0.5):
+    mp.style.use('seaborn-whitegrid')
+    rows = math.ceil((dataset.shape[1]/cols))
+    fig = mp.figure(figsize=(width,height))
+    for i,item in enumerate(dataset):
+        axe = fig.add_subplot(rows,cols,i+1)
+
+        axe.set_title(item)
+        if dataset[item].dtypes == np.object:
+            g = sns.countplot(y=item, data=dataset)
+            substrings = [s.get_text()[:18] for s in g.get_yticklabels()]
+            g.set(yticklabels=substrings)
+
+            mp.xticks(rotation=25)
+        else:
+            g = sns.distplot(dataset[item])
+            mp.xticks(rotation=25)
+    mp.show()
+
+
+
+print(type(df.columns))
+print([i for i in df.columns])
+print(math.ceil(float(df.shape[1]) / 3))
+# plot_distribution2(dataset=df.loc[:,['movie_country','movie_type']],height=100,cols=1)
+# mp.bar(['测试1','测试2','测试3'],[1,5,7])
+s = sns.regplot(x='movie_score',y='movie_num',data=df)
+
+mp.show()
 # s1 = df['movie_country'].str.split(' ')
 #
 #
